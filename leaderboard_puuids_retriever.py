@@ -10,7 +10,7 @@ class LeaderboardPUUIDsRetriever:
         lockfile_handler = LockfileHandler()
         lockfile_handler.lockfile_data_function()
 
-        leaderboard = requests.get(f"https://pd.eu.a.pvp.net/mmr/v1/leaderboards/affinity/eu/queue/competitive/season/9d85c932-4820-c060-09c3-668636d4df1b?startIndex=1&size=1",
+        leaderboard = requests.get(f"https://pd.eu.a.pvp.net/mmr/v1/leaderboards/affinity/eu/queue/competitive/season/9d85c932-4820-c060-09c3-668636d4df1b?startIndex=12000&size=1",
                      headers=lockfile_handler.match_id_header).json()
 
         print(leaderboard)

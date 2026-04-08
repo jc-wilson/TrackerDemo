@@ -67,6 +67,7 @@ for player in matches[0]["players"]:
 
 won_stats_raw = {
     "games": 0,
+    "games won": 0,
     "playtimeMillis": 0,
     "rounds": 0,
     "kills": 0,
@@ -82,10 +83,13 @@ won_stats_raw = {
     "headshots_received": 0,
     "first_bloods": 0,
     "first_deaths": 0,
-    "KAST": 0
+    "KAST": 0,
+    "Rounds Lost": 0,
+    "Rounds Won": 0,
 }
 lost_stats_raw = {
     "games": 0,
+    "games won": 0,
     "playtimeMillis": 0,
     "rounds": 0,
     "kills": 0,
@@ -101,10 +105,13 @@ lost_stats_raw = {
     "headshots_received": 0,
     "first_bloods": 0,
     "first_deaths": 0,
-    "KAST": 0
+    "KAST": 0,
+    "Rounds Lost": 0,
+    "Rounds Won": 0,
 }
 stats_raw = {
     "games": 0,
+    "games won": 0,
     "playtimeMillis": 0,
     "rounds": 0,
     "kills": 0,
@@ -120,7 +127,9 @@ stats_raw = {
     "headshots_received": 0,
     "first_bloods": 0,
     "first_deaths": 0,
-    "KAST": 0
+    "KAST": 0,
+    "Rounds Lost": 0,
+    "Rounds Won": 0,
 }
 
 won_rounds_stats_raw = {
@@ -138,7 +147,9 @@ won_rounds_stats_raw = {
     "headshots_received": 0,
     "first_bloods": 0,
     "first_deaths": 0,
-    "KAST": 0
+    "KAST": 0,
+    "Rounds Lost": 0,
+    "Rounds Won": 0,
 }
 lost_rounds_stats_raw = {
     "rounds": 0,
@@ -155,7 +166,210 @@ lost_rounds_stats_raw = {
     "headshots_received": 0,
     "first_bloods": 0,
     "first_deaths": 0,
-    "KAST": 0
+    "KAST": 0,
+    "Rounds Lost": 0,
+    "Rounds Won": 0,
+}
+
+server_stats_raw = {
+    "Frankfurt": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
+    "London": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
+    "Paris": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
+    "Madrid": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
+    "Stockholm": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
+    "Warsaw": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
+    "Istanbul": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
+    "Riyadh": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
+    "Mumbai": {
+        "games": 0,
+        "games won": 0,
+        "playtimeMillis": 0,
+        "rounds": 0,
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "ACS": 0,
+        "ADR": 0,
+        "legshots": 0,
+        "bodyshots": 0,
+        "headshots": 0,
+        "legshots_received": 0,
+        "bodyshots_received": 0,
+        "headshots_received": 0,
+        "first_bloods": 0,
+        "first_deaths": 0,
+        "KAST": 0,
+        "Rounds Lost": 0,
+        "Rounds Won": 0,
+    },
 }
 
 won_stats = {}
@@ -163,6 +377,7 @@ lost_stats = {}
 stats = {}
 won_rounds_stats = {}
 lost_rounds_stats = {}
+server_stats = {}
 
 for match in matches:
     teammates = []
@@ -177,38 +392,66 @@ for match in matches:
             won = teams["won"]
 
     target_stats = won_stats_raw if won else lost_stats_raw
+    server = match["matchInfo"]["gamePodId"][29:-2].capitalize()
+    target_server = server_stats_raw[server]
+
+    if won:
+        won_stats_raw["games won"] += 1
+        target_server["games won"] += 1
+
     for player in match["players"]:
         if player["subject"] == puuid:
+
             target_stats["games"] += 1
+            target_server["games"] += 1
+
             target_stats["playtimeMillis"] += player["stats"]["playtimeMillis"]
+            target_server["playtimeMillis"] += player["stats"]["playtimeMillis"]
+
             target_stats["rounds"] += player["stats"]["roundsPlayed"]
+            target_server["rounds"] += player["stats"]["roundsPlayed"]
+
             target_stats["kills"] += player["stats"]["kills"]
+            target_server["kills"] += player["stats"]["kills"]
+
             target_stats["deaths"] += player["stats"]["deaths"]
+            target_server["deaths"] += player["stats"]["deaths"]
+
             target_stats["assists"] += player["stats"]["assists"]
+            target_server["assists"] += player["stats"]["assists"]
+
             target_stats["ACS"] += player["stats"]["score"]
+            target_server["ACS"] += player["stats"]["score"]
+
             for round1 in player["roundDamage"]:
                 if round1["damage"] == 999:
                     continue
                 if round1["receiver"] in teammates:
                     continue
                 target_stats["ADR"] += round1["damage"]
+                target_server["ADR"] += round1["damage"]
     for round1 in match["roundResults"]:
         if round1["roundResult"] == "Surrendered":
             continue
         else:
             if round1["firstBloodPlayer"] == puuid:
                 target_stats["first_bloods"] += 1
+                target_server["first_bloods"] += 1
 
             for player in round1["playerStats"]:
                 if player["subject"] == round1["firstBloodPlayer"]:
                     if player["kills"][0]["victim"] == puuid:
                         target_stats["first_deaths"] += 1
+                        target_server["first_deaths"] += 1
                 if player["subject"] == puuid:
                     if player["damage"]:
                         for damage in player["damage"]:
                             target_stats["legshots"] += damage["legshots"]
                             target_stats["bodyshots"] += damage["bodyshots"]
                             target_stats["headshots"] += damage["headshots"]
+                            target_server["legshots"] += damage["legshots"]
+                            target_server["bodyshots"] += damage["bodyshots"]
+                            target_server["headshots"] += damage["headshots"]
                 else:
                     if player["damage"]:
                         for damage in player["damage"]:
@@ -216,6 +459,9 @@ for match in matches:
                                 target_stats["legshots_received"] += damage["legshots"]
                                 target_stats["bodyshots_received"] += damage["bodyshots"]
                                 target_stats["headshots_received"] += damage["headshots"]
+                                target_server["legshots_received"] += damage["legshots"]
+                                target_server["bodyshots_received"] += damage["bodyshots"]
+                                target_server["headshots_received"] += damage["headshots"]
 
     for round1 in match["roundResults"]:
         if round1["roundResult"] == "Surrendered":
@@ -224,6 +470,15 @@ for match in matches:
             kast_points = 0
             user_deaths = 0
             death_list = []
+
+            if round1["winningTeam"] == team:
+                won_rounds_stats_raw["Rounds Won"] += 1
+                target_stats["Rounds Won"] += 1
+                target_server["Rounds Won"] += 1
+            else:
+                lost_rounds_stats_raw["Rounds Lost"] += 1
+                target_stats["Rounds Lost"] += 1
+                target_server["Rounds Lost"] += 1
 
             target_round_stats = won_rounds_stats_raw if round1["winningTeam"] == team else lost_rounds_stats_raw
             target_round_stats["rounds"] += 1
@@ -279,8 +534,11 @@ for match in matches:
             if kast_points:
                 target_round_stats["KAST"] += 1
                 target_stats["KAST"] += 1
+                target_server["KAST"] += 1
 
 for stat in stats_raw.keys():
+    if stat == "Server":
+        continue
     stats_raw[stat] = (int(won_stats_raw[stat]) + int(lost_stats_raw[stat]))
 
 print(won_rounds_stats_raw)
@@ -289,6 +547,10 @@ print(lost_rounds_stats_raw)
 won_stats["Games Played"] = won_stats_raw["games"]
 lost_stats["Games Played"] = lost_stats_raw["games"]
 stats["Games Played"] = stats_raw["games"]
+
+won_stats["games won"] = won_stats_raw["games won"]
+lost_stats["games won"] = lost_stats_raw["games won"]
+stats["games won"] = stats_raw["games won"]
 
 won_stats["Playtime"] = f"{safe_division(int(won_stats_raw['playtimeMillis']), 1000 * 60 * 60, 1)}h"
 lost_stats["Playtime"] = f"{safe_division(int(lost_stats_raw['playtimeMillis']), 1000 * 60 * 60, 1)}h"
@@ -394,6 +656,66 @@ stats["KAST %"] = safe_division(
     1
 )
 
+won_stats["Round Win %"] = safe_division(
+    int(won_stats_raw["Rounds Won"]) * 100,
+    int(won_stats_raw["rounds"]),
+    1
+)
+
+lost_stats["Round Win %"] = safe_division(
+    int(lost_stats_raw["Rounds Won"]) * 100,
+    int(lost_stats_raw["rounds"]),
+    1
+)
+
+stats["Round Win %"] = safe_division(
+    int(stats_raw["Rounds Won"]) * 100,
+    int(stats_raw["rounds"]),
+    1
+)
+
+for server_name, raw_server_stats in server_stats_raw.items():
+    if raw_server_stats["games"] == 0:
+        continue
+    server_stats[server_name] = {}
+    server_stats[server_name]["Games Played"] = raw_server_stats["games"]
+    server_stats[server_name]["Games Won"] = raw_server_stats["games won"]
+    server_stats[server_name]["Playtime"] = f"{safe_division(int(raw_server_stats['playtimeMillis']), 1000 * 60 * 60, 1)}h"
+    server_stats[server_name]["ADR"] = safe_division(int(raw_server_stats["ADR"]), int(raw_server_stats["rounds"]), 1)
+    server_stats[server_name]["ACS"] = safe_division(int(raw_server_stats["ACS"]), int(raw_server_stats["rounds"]), 1)
+    server_stats[server_name]["K/D"] = safe_division(int(raw_server_stats["kills"]), int(raw_server_stats["deaths"]), 2)
+    server_stats[server_name]["K/R"] = safe_division(int(raw_server_stats["kills"]), int(raw_server_stats["rounds"]), 2)
+    server_stats[server_name]["Entry Success Rate %"] = safe_division(
+        int(raw_server_stats["first_bloods"]) * 100,
+        int(raw_server_stats["first_bloods"]) + int(raw_server_stats["first_deaths"]),
+        1,
+    )
+    server_stats[server_name]["Entry Attempt Rate %"] = safe_division(
+        (int(raw_server_stats["first_bloods"]) + int(raw_server_stats["first_deaths"])) * 100,
+        int(raw_server_stats["rounds"]),
+        1,
+    )
+    server_stats[server_name]["HS %"] = safe_division(
+        int(raw_server_stats["headshots"]) * 100,
+        int(raw_server_stats["legshots"]) + int(raw_server_stats["bodyshots"]) + int(raw_server_stats["headshots"]),
+        1,
+    )
+    server_stats[server_name]["HS % Received"] = safe_division(
+        int(raw_server_stats["headshots_received"]) * 100,
+        int(raw_server_stats["legshots_received"]) + int(raw_server_stats["bodyshots_received"]) + int(raw_server_stats["headshots_received"]),
+        1,
+    )
+    server_stats[server_name]["KAST %"] = safe_division(
+        int(raw_server_stats["KAST"]) * 100,
+        int(raw_server_stats["rounds"]),
+        1,
+    )
+    server_stats[server_name]["Round Win %"] = safe_division(
+        int(raw_server_stats["Rounds Won"]) * 100,
+        int(raw_server_stats["rounds"]),
+        1,
+    )
+
 won_rounds_stats["ADR"] = safe_division(int(won_rounds_stats_raw["ADR"]), int(won_rounds_stats_raw["rounds"]), 1)
 lost_rounds_stats["ADR"] = safe_division(int(lost_rounds_stats_raw["ADR"]), int(lost_rounds_stats_raw["rounds"]), 1)
 
@@ -463,6 +785,18 @@ lost_rounds_stats["KAST %"] = safe_division(
     1
 )
 
+won_rounds_stats["Round Win %"] = safe_division(
+    int(won_rounds_stats_raw["Rounds Won"]) * 100,
+    int(won_rounds_stats_raw["rounds"]),
+    1
+)
+
+lost_rounds_stats["Round Win %"] = safe_division(
+    int(lost_rounds_stats_raw["Rounds Won"]) * 100,
+    int(lost_rounds_stats_raw["rounds"]),
+    1
+)
+
 
 print(f"player info: {player_info}")
 print(f"Stats in all games: {stats}")
@@ -470,3 +804,4 @@ print(f"Stats in games won: {won_stats}")
 print(f"Stats in games lost: {lost_stats}")
 print(f"Stats in rounds won: {won_rounds_stats}")
 print(f"Stats in rounds lost: {lost_rounds_stats}")
+print(f"Stats by server: {server_stats}")

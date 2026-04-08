@@ -19,6 +19,7 @@ STAT_ORDER = [
     "Entry Success Rate %",
     "Entry Attempt Rate %",
     "KAST %",
+    "Round Win %",
     "HS %",
     "HS % Received",
 ]
@@ -82,6 +83,7 @@ def _parse_analysis_output(stdout):
         "Stats in games lost": None,
         "Stats in rounds won": None,
         "Stats in rounds lost": None,
+        "Stats by server": {},
     }
 
     for raw_line in stdout.splitlines():
@@ -112,6 +114,7 @@ def _parse_analysis_output(stdout):
             "won_rounds": expected["Stats in rounds won"],
             "lost_rounds": expected["Stats in rounds lost"],
         },
+        "server_stats": expected["Stats by server"] or {},
     }
 
 
@@ -153,6 +156,13 @@ def coerce_int(value):
         return int(value)
     except (TypeError, ValueError):
         return 0
+
+
+def coerce_float(value):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return 0.0
 
 
 class StatCard(tk.Frame):
@@ -230,8 +240,11 @@ class TrackerStatsApp(tk.Tk):
         self.payload = payload
         self.error_message = error_message
         self.active_view = "all"
+        self.active_server = None
         self.toggle_buttons = {}
         self.metric_cards = {}
+        self.server_var = tk.StringVar(value="Server")
+        self.server_button = None
 
         self._build_shell()
         if self.error_message:
@@ -310,6 +323,7 @@ class TrackerStatsApp(tk.Tk):
     def _build_dashboard(self):
         self.player_info = self.payload["player_info"]
         self.stats_by_view = self.payload["stats"]
+        self.server_stats_by_name = self.payload.get("server_stats", {})
 
         self._build_hero()
         self._build_toggle()
@@ -432,7 +446,7 @@ class TrackerStatsApp(tk.Tk):
             style="arc",
             width=16,
         )
-        ring.create_text(
+        self.ring_mode_label = ring.create_text(
             75,
             60,
             text="W / L",
@@ -515,6 +529,41 @@ class TrackerStatsApp(tk.Tk):
             button.grid(row=0, column=index, padx=4)
             self.toggle_buttons[view_key] = button
 
+        if self.server_stats_by_name:
+            self.server_button = tk.Menubutton(
+                container,
+                textvariable=self.server_var,
+                bg=COLORS["panel"],
+                fg=COLORS["muted"],
+                activebackground=COLORS["panel"],
+                activeforeground=COLORS["text"],
+                relief="flat",
+                bd=0,
+                padx=18,
+                pady=10,
+                font=("Bahnschrift SemiBold", 11),
+                cursor="hand2",
+                indicatoron=False,
+                highlightthickness=0,
+            )
+            self.server_button.grid(row=0, column=len(VIEW_CONFIG), padx=(14, 4))
+
+            menu = tk.Menu(
+                self.server_button,
+                tearoff=0,
+                bg=COLORS["panel"],
+                fg=COLORS["text"],
+                activebackground=COLORS["accent"],
+                activeforeground=COLORS["text"],
+                bd=0,
+            )
+            for server_name in sorted(self.server_stats_by_name):
+                menu.add_command(
+                    label=server_name,
+                    command=lambda name=server_name: self.show_server_view(name),
+                )
+            self.server_button.configure(menu=menu)
+
     def _build_cards(self):
         self.cards_frame = tk.Frame(self.main_panel, bg=COLORS["panel_alt"])
         self.cards_frame.pack(fill="both", expand=True)
@@ -547,8 +596,7 @@ class TrackerStatsApp(tk.Tk):
             return won_games, lost_games
         return 0, 0
 
-    def _update_ring(self, view_key):
-        wins, losses = self._get_view_record(view_key)
+    def _set_ring(self, wins, losses, label_text, record_text):
         total = wins + losses
 
         if total <= 0:
@@ -566,16 +614,38 @@ class TrackerStatsApp(tk.Tk):
 
         self.ring_canvas.itemconfigure(self.win_arc, start=90, extent=win_extent)
         self.ring_canvas.itemconfigure(self.loss_arc, start=90 + win_extent, extent=loss_extent)
+        self.ring_canvas.itemconfigure(self.ring_mode_label, text=label_text)
+        self.ring_canvas.itemconfigure(self.ring_record_label, text=record_text)
+
+    def _update_ring(self, view_key):
+        wins, losses = self._get_view_record(view_key)
         if view_key == "won_rounds":
             ring_text = "100% W"
         elif view_key == "lost_rounds":
             ring_text = "100% L"
         else:
             ring_text = f"{wins} / {losses}"
-        self.ring_canvas.itemconfigure(self.ring_record_label, text=ring_text)
+        self._set_ring(wins, losses, "W / L", ring_text)
+
+    def _update_server_ring(self, current_stats):
+        games_played = coerce_int(current_stats.get("Games Played"))
+        games_won = coerce_int(current_stats.get("Games Won"))
+        games_lost = max(0, games_played - games_won)
+        self._set_ring(games_won, games_lost, "W / L", f"{games_won} / {games_lost}")
+
+    def _set_server_button_active(self, is_active):
+        if not self.server_button:
+            return
+        self.server_button.configure(
+            bg=COLORS["accent"] if is_active else COLORS["panel"],
+            fg=COLORS["text"] if is_active else COLORS["muted"],
+            activebackground=COLORS["accent"] if is_active else COLORS["panel"],
+            activeforeground=COLORS["text"],
+        )
 
     def show_view(self, view_key):
         self.active_view = view_key
+        self.active_server = None
         current_stats = self.stats_by_view.get(view_key, {})
         config = VIEW_CONFIG[view_key]
 
@@ -587,6 +657,8 @@ class TrackerStatsApp(tk.Tk):
                 activebackground=COLORS["accent"] if is_active else COLORS["panel"],
                 activeforeground=COLORS["text"],
             )
+        self.server_var.set("Server")
+        self._set_server_button_active(False)
 
         self.context_title.configure(text=config["label"])
 
@@ -607,6 +679,40 @@ class TrackerStatsApp(tk.Tk):
 
         self.context_summary.configure(text=summary_text)
         self._update_ring(view_key)
+
+        for stat_name in STAT_ORDER:
+            display_value = format_stat_value(stat_name, current_stats.get(stat_name))
+            self.metric_cards[stat_name].update_value(display_value)
+
+    def show_server_view(self, server_name):
+        self.active_server = server_name
+        current_stats = self.server_stats_by_name.get(server_name, {})
+
+        for button in self.toggle_buttons.values():
+            button.configure(
+                bg=COLORS["panel"],
+                fg=COLORS["muted"],
+                activebackground=COLORS["panel"],
+                activeforeground=COLORS["text"],
+            )
+
+        self.server_var.set(server_name)
+        self._set_server_button_active(True)
+        self.context_title.configure(text=f"{server_name} Server")
+
+        playtime = format_stat_value("Playtime", current_stats.get("Playtime"))
+        games_played = format_stat_value("Games Played", current_stats.get("Games Played"))
+        rank_value = self.player_info.get("rank") or "N/A"
+        level_value = self.player_info.get("level") or "N/A"
+
+        self.hero_badges["rank"].configure(text=str(rank_value))
+        self.hero_badges["level"].configure(text=str(level_value))
+        self.hero_badges["Playtime"].configure(text=playtime)
+        self.hero_badges["Games Played"].configure(text=games_played)
+
+        summary_text = f"{games_played} matches recorded on {server_name} with {playtime} of playtime."
+        self.context_summary.configure(text=summary_text)
+        self._update_server_ring(current_stats)
 
         for stat_name in STAT_ORDER:
             display_value = format_stat_value(stat_name, current_stats.get(stat_name))
